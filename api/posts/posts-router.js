@@ -44,7 +44,6 @@ router.post('/', (req, res) => {
             message: "Please provide title and contents for the post",
         })
     } else {
-        console.log('success')
         Post.insert(user)
         .then(({ id }) => {
             return Post.findById(id)
@@ -62,8 +61,24 @@ router.post('/', (req, res) => {
     }
 })
 
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', async (req, res) => {
+    try {
+        const possibleUser = await Post.findById(req.params.id)
+        if(!possibleUser) {
+            res.status(404).json({
+                message: "The post with the specified ID does not exist" 
+            })
+        } else {
+            const deletedUser = await Post.remove(possibleUser.id)
+            res.status(200).json(possibleUser)
+        }
+        } catch (err) {
+            res.status(500).json({
+                message: "The comments information could not be retrieved",
+                err: err.message, 
+                stack: err.stack
+            })
+        }
 })
 
 router.put('/:id', (req, res) => {
