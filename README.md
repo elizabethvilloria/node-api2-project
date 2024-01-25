@@ -52,7 +52,7 @@ Your assignment page on Canvas should contain instructions for submitting this p
 - If the information about the _post_ is valid:
 
   - save the new _post_ the the database.
-  - return HTTP status code `201` (Created).
+  - return HTTP status code `201` (Creasted).
   - return the newly created _post_.
 
 - If there's an error while saving the _post_:
